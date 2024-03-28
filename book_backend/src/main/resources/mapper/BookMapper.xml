@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--            sql映射文件            -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hello.mapper.BookMapper">
+
+    <select id="getBooksByAttribute" resultType="com.example.hello.pojo.Book">
+        select *
+        from books
+        where
+            user_of_book=#{username} and
+            <choose>
+                <when test="selectAttr==1">
+                    title like #{searchText}"%"
+                </when>
+                <when test="selectAttr==2">
+                    author like #{searchText}"%"
+                </when>
+                <when test="selectAttr==3">
+                    publisher like #{searchText}"%"
+                </when>
+            </choose>
+        order by create_time
+    </select>
+</mapper>
